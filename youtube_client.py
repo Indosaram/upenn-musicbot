@@ -3,29 +3,18 @@
 import httplib2
 import os
 import sys
+import json
 
 from apiclient.discovery import build
-from oauth2client.client import from_client_config
+from oauth2client.client import flow_from_clientsecrets
 from oauth2client.file import Storage
 from oauth2client.tools import argparser, run_flow
 
 
 class YoutubeClient:
     def _check_auth(self):
-        CLIENT_SECRETS = {
-            'installed': {
-                'client_id': '416734988364-1c9kld4rons3ev1iohq9tbd0752pf7am.apps.googleusercontent.com',
-                'project_id': 'musicbot-308507',
-                'auth_uri': 'https://accounts.google.com/o/oauth2/auth',
-                'token_uri': 'https://oauth2.googleapis.com/token',
-                'auth_provider_x509_cert_url': 'https://www.googleapis.com/oauth2/v1/certs',
-                'client_secret': os.environ.get('client_secret'),
-                'redirect_uris': [
-                    'urn:ietf:wg:oauth:2.0:oob',
-                    'http://localhost',
-                ],
-            }
-        }
+        json.dump("client_secrets.json", os.environ.get('client_secrets'))
+        CLIENT_SECRETS_FILE = "client_secrets.json"
 
         # This variable defines a message to display if the CLIENT_SECRETS_FILE is
         # missing.
@@ -46,8 +35,9 @@ class YoutubeClient:
             os.path.join(os.path.dirname(__file__), CLIENT_SECRETS_FILE)
         )
 
-        flow = from_client_config(
-            CLIENT_SECRETS,
+        flow = flow_from_clientsecrets(
+            CLIENT_SECRETS_FILE,
+            message=MISSING_CLIENT_SECRETS_MESSAGE,
             scope=self.YOUTUBE_READ_WRITE_SCOPE,
         )
 
