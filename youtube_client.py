@@ -129,7 +129,7 @@ class YoutubeClient:
                     "response_type": "in_channel",
                     "text": f"{song_name}이 추가되었습니다.",
                 }
-                code = "200"
+                code = "200 OK"
             except Exception as e:
                 code = "404"
                 response = (
