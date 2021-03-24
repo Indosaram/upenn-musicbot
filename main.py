@@ -18,16 +18,7 @@ if __name__ == "__main__":
 
     code, text = yc.add_new_item_to_playlist(video_url)
     response = {
-        "blocks": [
-            {
-                "type": "section",
-                "response_type": "in_channel",
-                "text": {
-                    "type": "mrkdwn",
-                    "text": text,
-                },
-            },
-        ]
+        "text": text,
     }
     requests.post(
         response_url,
