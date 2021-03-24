@@ -1,5 +1,7 @@
 #!/usr/bin/python
 import cgi
+import sys
+import json
 
 from youtube_client import YoutubeClient
 
@@ -15,5 +17,5 @@ if __name__ == "__main__":
     yc = YoutubeClient(playlist_id)
 
     code, response = yc.add_new_item_to_playlist(video_url)
-    print(f"Length:{len(response)}\r\n")
-    print(response)
+    data = sys.stdin.read()
+    print(str(json.loads(data)))

@@ -139,7 +139,7 @@ class YoutubeClient:
                     },
                 )
 
-        return code, json.dumps(response)
+        return code, response
 
     def _get_video_id(self, url):
         if "?v=" in url:
