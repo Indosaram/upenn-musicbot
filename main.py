@@ -32,7 +32,7 @@ if __name__ == "__main__":
     requests.post(
         response_url,
         data=json.dumps(response),
-        headers={"Content-type": "application/json"},
+        headers={"Content-Type": "application/json"},
     )
 
     print(response)
