@@ -13,16 +13,6 @@ from oauth2client.tools import argparser, run_flow
 
 class YoutubeClient:
     def _check_auth(self):
-        # The CLIENT_SECRETS_FILE variable specifies the name of a file that contains
-        # the OAuth 2.0 information for this application, including its client_id and
-        # client_secret. You can acquire an OAuth 2.0 client ID and client secret from
-        # the Google API Console at
-        # https://console.developers.google.com/.
-        # Please ensure that you have enabled the YouTube Data API for your project.
-        # For more information about using OAuth2 to access the YouTube Data API, see:
-        #   https://developers.google.com/youtube/v3/guides/authentication
-        # For more information about the client_secrets.json file format, see:
-        #   https://developers.google.com/api-client-library/python/guide/aaa_client_secrets
         CLIENT_SECRETS_FILE = os.environ['client_secrets']
 
         # This variable defines a message to display if the CLIENT_SECRETS_FILE is
@@ -98,7 +88,6 @@ class YoutubeClient:
         print("New playlist id: %s" % playlists_insert_response["id"])
 
     def add_new_item_to_playlist(self, url):
-        # TODO: return response from API
         video_id = self._get_video_id(url)
         if video_id is None:
             print("잘못된 URL입니다.")
@@ -109,6 +98,7 @@ class YoutubeClient:
                     "resourceId": {"kind": "youtube#video", "videoId": video_id},
                 }
             }
+            # TODO: return response from API
             pl_add_res = (
                 self.youtube.playlistItems()
                 .insert(part="snippet", body=snippet_body)
