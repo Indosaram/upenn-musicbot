@@ -4,6 +4,8 @@ import httplib2
 import os
 import sys
 import json
+import re
+import requests
 
 from apiclient.discovery import build
 from oauth2client.client import flow_from_clientsecrets
@@ -109,8 +111,19 @@ class YoutubeClient:
                 .insert(part="snippet", body=snippet_body)
                 .execute()
             )
-
-            print("재생목록에 추가되었습니다!")
+            res = requests.get(url)
+            song_name = (
+                re.compile(r'<meta name="title" content="(.|[^">]+)">')
+                .search(res.text)
+                .group(1)
+            )
+            response = json.loads(
+                {
+                    "response_type": "in_channel",
+                    "text": f"{song_name}이 추가되었습니다.",
+                }
+            )
+            print(json.dumps(response))
 
     def _get_video_id(self, url):
         if "?v=" in url:
