@@ -1,0 +1,26 @@
+{
+    "access_token": "ya29.a0AfH6SMC6Rn_qjgvkDeh1zmekHcOXyROI_HNF9QakqyDuQnsc-rixeX0l5ychDVyGckH7nPnEw643UUNMv87Nooit6F33OyxlKBisDWC7_iYp24p6Zo8m4AzWmJ8QiaNXDfncFe2pwVe2U_KplSx--qop4Yrx",
+    "client_id": "416734988364-1c9kld4rons3ev1iohq9tbd0752pf7am.apps.googleusercontent.com",
+    "client_secret": "btmFAF0uRXkNe1wEPRKlfEiN",
+    "refresh_token": "1//0ezlfzVrE0OYsCgYIARAAGA4SNwF-L9IrfKYKsWbL08pH7d8Rj5pJvuD6q_v8qETN_0YRl0xrVAU2t6_wjwsM6ngePey48Jaw99I",
+    "token_expiry": "2021-03-23T10:07:39Z",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "user_agent": null,
+    "revoke_uri": "https://oauth2.googleapis.com/revoke",
+    "id_token": null,
+    "id_token_jwt": null,
+    "token_response": {
+        "access_token": "ya29.a0AfH6SMC6Rn_qjgvkDeh1zmekHcOXyROI_HNF9QakqyDuQnsc-rixeX0l5ychDVyGckH7nPnEw643UUNMv87Nooit6F33OyxlKBisDWC7_iYp24p6Zo8m4AzWmJ8QiaNXDfncFe2pwVe2U_KplSx--qop4Yrx",
+        "expires_in": 3599,
+        "refresh_token": "1//0ezlfzVrE0OYsCgYIARAAGA4SNwF-L9IrfKYKsWbL08pH7d8Rj5pJvuD6q_v8qETN_0YRl0xrVAU2t6_wjwsM6ngePey48Jaw99I",
+        "scope": "https://www.googleapis.com/auth/youtube",
+        "token_type": "Bearer"
+    },
+    "scopes": [
+        "https://www.googleapis.com/auth/youtube"
+    ],
+    "token_info_uri": "https://oauth2.googleapis.com/tokeninfo",
+    "invalid": false,
+    "_class": "OAuth2Credentials",
+    "_module": "oauth2client.client"
+}
