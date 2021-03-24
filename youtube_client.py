@@ -115,12 +115,11 @@ class YoutubeClient:
                 )
 
                 res = requests.get(url)
-                song_name = (
+                response = (
                     re.compile(r'<meta name="title" content="(.|[^">]+)">')
                     .search(res.text)
                     .group(1)
                 )
-                response = f"{song_name}이 추가되었습니다."
                 code = "200 OK"
             except Exception as e:
                 code = "404"
