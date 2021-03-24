@@ -5,7 +5,7 @@ import os
 import sys
 
 from apiclient.discovery import build
-from oauth2client.client import flow_from_client_config
+from oauth2client.client import from_client_config
 from oauth2client.file import Storage
 from oauth2client.tools import argparser, run_flow
 
@@ -46,7 +46,7 @@ class YoutubeClient:
             os.path.join(os.path.dirname(__file__), CLIENT_SECRETS_FILE)
         )
 
-        flow = flow_from_client_config(
+        flow = from_client_config(
             CLIENT_SECRETS,
             scope=self.YOUTUBE_READ_WRITE_SCOPE,
         )
