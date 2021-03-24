@@ -18,11 +18,20 @@ if __name__ == "__main__":
 
     code, text = yc.add_new_item_to_playlist(video_url)
     response = {
-        "text": text,
+        "blocks": [
+            {
+                "type": "section",
+                "response_type": "in_channel",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": text,
+                },
+            },
+        ]
     }
     requests.post(
         response_url,
-        data=json.dumps(response),
+        json=json.dumps(response),
         headers={"Content-Type": "application/json"},
     )
 
