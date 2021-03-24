@@ -94,12 +94,7 @@ class YoutubeClient:
     def add_new_item_to_playlist(self, url):
         video_id = self._get_video_id(url)
         if video_id is None:
-            response = (
-                {
-                    "response_type": "in_channel",
-                    "text": "잘못된 URL입니다.",
-                },
-            )
+            response = "잘못된 URL입니다."
             code = "404"
 
         else:
@@ -125,20 +120,11 @@ class YoutubeClient:
                     .search(res.text)
                     .group(1)
                 )
-                response = {
-                    "response_type": "in_channel",
-                    "text": {"type": "json", "text": f"{song_name}이 추가되었습니다."},
-                }
+                response = f"{song_name}이 추가되었습니다."
                 code = "200 OK"
             except Exception as e:
                 code = "404"
-                response = (
-                    {
-                        "response_type": "in_channel",
-                        "text": f"e",
-                    },
-                )
-
+                response = f"{e}"
         return code, response
 
     def _get_video_id(self, url):
