@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import cgi
 import json
+import requests
 
 from youtube_client import YoutubeClient
 
@@ -10,6 +11,7 @@ if __name__ == "__main__":
 
     fs = cgi.FieldStorage()
     video_url = fs["text"].value
+    response_url = fs["response_url"].value
 
     playlist_id = "PLnqRT9qVgyIDvGJm32xds8BvKwhGJ0526"
     yc = YoutubeClient(playlist_id)
@@ -27,5 +29,10 @@ if __name__ == "__main__":
             },
         ]
     }
+    requests.post(
+        response_url,
+        data=json.dump(response),
+        headers={"Content-type": "application/json"},
+    )
 
     print(response)
