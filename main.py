@@ -1,13 +1,13 @@
 #!/usr/bin/python
 import cgi
-import sys
+from urllib.parse import urlencode
 import json
 
 from youtube_client import YoutubeClient
 
 if __name__ == "__main__":
     print('Status: 200')
-    print("Content-type: application/json\r\n\r\n")
+    print("Content-type: application/json\n\n")
 
     fs = cgi.FieldStorage()
     video_url = fs["text"].value
@@ -17,4 +17,5 @@ if __name__ == "__main__":
     yc = YoutubeClient(playlist_id)
 
     code, response = yc.add_new_item_to_playlist(video_url)
+    data = urlencode(response).encode('utf-8')
     print(json.dumps(response))
