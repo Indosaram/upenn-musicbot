@@ -31,7 +31,7 @@ if __name__ == "__main__":
     }
     requests.post(
         response_url,
-        data=json.dump(response),
+        data=json.dumps(response),
         headers={"Content-type": "application/json"},
     )
 
