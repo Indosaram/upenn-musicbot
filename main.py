@@ -17,5 +17,4 @@ if __name__ == "__main__":
     yc = YoutubeClient(playlist_id)
 
     code, response = yc.add_new_item_to_playlist(video_url)
-    data = sys.stdin.read()
-    print(str(json.loads(data)))
+    print(json.dumps(response))
