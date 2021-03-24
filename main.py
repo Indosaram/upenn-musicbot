@@ -25,9 +25,9 @@ if __name__ == "__main__":
     fs = cgi.FieldStorage()
     video_url = fs["text"].value
     user_id = fs["user_id"].value
-    response_url = "https://hooks.slack.com/services/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"
+    response_url = os.environ.get('webhook_url')
+    playlist_id = os.environ.get('playlist_id')
 
-    playlist_id = "PLnqRT9qVgyIDvGJm32xds8BvKwhGJ0526"
     yc = YoutubeClient(playlist_id)
 
     code, song = yc.add_new_item_to_playlist(video_url)

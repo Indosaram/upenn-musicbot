@@ -137,13 +137,3 @@ class YoutubeClient:
         title = search_response['items'][0]['snippet']['title']
 
         return title
-
-
-# Unit test
-if __name__ == "__main__":
-    playlist_id = "PLnqRT9qVgyIDMGZeV45CFoQa_QK2iKFc6"
-    video_url = "https://www.youtube.com/watch?v=gTOYhxubOmk"
-    yc = YoutubeClient(playlist_id)
-    yc.add_new_item_to_playlist(video_url)
-    print(yc._get_video_title("gTOYhxubOmk"))
-    print('Successful')
