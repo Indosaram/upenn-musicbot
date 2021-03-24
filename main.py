@@ -28,5 +28,4 @@ if __name__ == "__main__":
         ]
     }
 
-    json_data = json.dumps(response)
-    print(json_data)
+    print(response)
