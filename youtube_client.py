@@ -94,7 +94,14 @@ class YoutubeClient:
     def add_new_item_to_playlist(self, url):
         video_id = self._get_video_id(url)
         if video_id is None:
-            print("잘못된 URL입니다.")
+            response = (
+                {
+                    "response_type": "in_channel",
+                    "text": "잘못된 URL입니다.",
+                },
+            )
+            code = "404"
+
         else:
             snippet_body = {
                 "snippet": {
@@ -105,25 +112,34 @@ class YoutubeClient:
                     },
                 }
             }
-            # TODO: return response from API
-            pl_add_res = (
-                self.youtube.playlistItems()
-                .insert(part="snippet", body=snippet_body)
-                .execute()
-            )
-            res = requests.get(url)
-            song_name = (
-                re.compile(r'<meta name="title" content="(.|[^">]+)">')
-                .search(res.text)
-                .group(1)
-            )
-            response = json.loads(
-                {
+            try:
+                pl_add_res = (
+                    self.youtube.playlistItems()
+                    .insert(part="snippet", body=snippet_body)
+                    .execute()
+                )
+
+                res = requests.get(url)
+                song_name = (
+                    re.compile(r'<meta name="title" content="(.|[^">]+)">')
+                    .search(res.text)
+                    .group(1)
+                )
+                response = {
                     "response_type": "in_channel",
                     "text": f"{song_name}이 추가되었습니다.",
                 }
-            )
-            print(json.dumps(response))
+                code = "200"
+            except Exception as e:
+                code = "404"
+                response = (
+                    {
+                        "response_type": "in_channel",
+                        "text": f"e",
+                    },
+                )
+
+        return code, json.dumps(response)
 
     def _get_video_id(self, url):
         if "?v=" in url:

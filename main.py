@@ -4,8 +4,6 @@ import cgi
 from youtube_client import YoutubeClient
 
 if __name__ == "__main__":
-    print('Status: 200')
-    print("Content-type: application/json\r\n\r\n")
 
     fs = cgi.FieldStorage()
     video_url = fs["text"].value
@@ -14,4 +12,8 @@ if __name__ == "__main__":
     playlist_id = "PLnqRT9qVgyIDvGJm32xds8BvKwhGJ0526"
     yc = YoutubeClient(playlist_id)
 
-    yc.add_new_item_to_playlist(video_url)
+    code, response = yc.add_new_item_to_playlist(video_url)
+
+    print(f'Status: {code}')
+    print("Content-type: application/json\r\n\r\n")
+    print(response)
