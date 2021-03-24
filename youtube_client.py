@@ -127,7 +127,7 @@ class YoutubeClient:
                 )
                 response = {
                     "response_type": "in_channel",
-                    "text": f"{song_name}이 추가되었습니다.",
+                    "text": {"type": "json", "text": f"{song_name}이 추가되었습니다."},
                 }
                 code = "200 OK"
             except Exception as e:
