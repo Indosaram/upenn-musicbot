@@ -17,6 +17,6 @@ if __name__ == "__main__":
 
     code, response = yc.add_new_item_to_playlist(video_url)
 
-    print("<html><head><body><p>")
-    print(json.JSONEncoder().encode(response))
-    print("</p></body></head></html>")
+    json_data = json.dumps(response)
+    print("Length:", len(json_data))
+    print(json_data)
