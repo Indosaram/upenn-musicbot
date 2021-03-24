@@ -18,7 +18,6 @@ def get_username_by_id(id):
 
 if __name__ == "__main__":
     print('Status: 200')
-    print("Content-type: text/plain; utf-8\r\n\r\n")
 
     api_token = os.environ.get('api_token')
 
