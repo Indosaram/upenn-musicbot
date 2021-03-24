@@ -114,12 +114,7 @@ class YoutubeClient:
                     .execute()
                 )
 
-                res = requests.get(url)
-                response = (
-                    re.compile(r'<meta name="title" content="(.|[^">]+)">')
-                    .search(res.text)
-                    .group(1)
-                )
+                response = self._get_video_title(video_id)
                 code = "200 OK"
             except Exception as e:
                 code = "404"
@@ -132,11 +127,23 @@ class YoutubeClient:
         else:
             return None
 
+    def _get_video_title(self, id):
+        search_response = (
+            self.youtube.search()
+            .list(q=id, part="id,snippet", maxResults=1)
+            .execute()
+        )
+
+        title = search_response['items'][0]['snippet']['title']
+
+        return title
+
 
 # Unit test
 if __name__ == "__main__":
     playlist_id = "PLnqRT9qVgyIDMGZeV45CFoQa_QK2iKFc6"
-    video_url = "https://www.youtube.com/watch?v=RmVcOfHJWGU"
+    video_url = "https://www.youtube.com/watch?v=gTOYhxubOmk"
     yc = YoutubeClient(playlist_id)
     yc.add_new_item_to_playlist(video_url)
+    print(yc._get_video_title("gTOYhxubOmk"))
     print('Successful')
