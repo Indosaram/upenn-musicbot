@@ -13,7 +13,7 @@ if __name__ == "__main__":
 
     code, song = yc.add_new_item_to_playlist(cm.video_url)
 
-    user_name = cm.get_username_by_id(cm.user_id)
+    user_name = cm.get_username_by_id()
 
     payload = {
         "channel": "#성수_신청곡_받습니다",
