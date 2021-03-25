@@ -121,10 +121,10 @@ class YoutubeClient:
                 response = f"{e}"
         return code, response
 
-    def delete_new_item_from_playlist(self, id):
+    def delete_new_item_from_playlist(self, url):
         # TODO: parse error code
-        pl_del_res = self.youtube.playlistItems().delete(id)        
-
+        video_id = self._get_video_id(url)
+        pl_del_res = self.youtube.playlistItems().delete(video_id)
 
     def _get_video_id(self, url):
         if "?v=" in url:
