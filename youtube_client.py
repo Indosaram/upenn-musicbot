@@ -123,8 +123,27 @@ class YoutubeClient:
 
     def delete_new_item_from_playlist(self, url):
         # TODO: parse error code
-        video_id = self._get_video_id(url)
-        pl_del_res = self.youtube.playlistItems().delete(video_id)
+        playlist_items = self._get_playlist_items()
+        video_id_in_playlist = playlist_items[url]
+        pl_del_res = self.youtube.playlistItems().delete(video_id_in_playlist)
+
+    def _get_playlist_items(self):
+        req = self.youtube.playlistItems().list(
+            playlistId=self.playlist_id, part="snippet"
+        )
+        playlist_items = {}
+        while req:
+            res = req.execute()
+
+            # Print information about each video.
+            for playlist_item in res["items"]:
+                url = playlist_item["snippet"]["url"]
+                video_id = playlist_item["snippet"]["resourceId"]["videoId"]
+                playlist_items[url] = video_id
+
+            req = self.youtube.playlistItems().list_next(req, res)
+
+        return playlist_items
 
     def _get_video_id(self, url):
         if "?v=" in url:
