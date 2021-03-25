@@ -127,7 +127,9 @@ class YoutubeClient:
         video_id = self._get_video_id(url)
         title = self._get_video_title(video_id)
         video_id_in_playlist = playlist_items[title]
-        pl_del_res = self.youtube.playlistItems().delete(video_id_in_playlist)
+        pl_del_res = self.youtube.playlistItems().delete(
+            id=video_id_in_playlist
+        )
 
     def _get_playlist_items(self):
         req = self.youtube.playlistItems().list(
