@@ -121,6 +121,11 @@ class YoutubeClient:
                 response = f"{e}"
         return code, response
 
+    def delete_new_item_from_playlist(self, id):
+        # TODO: parse error code
+        pl_del_res = self.youtube.playlistItems().delete(id)        
+
+
     def _get_video_id(self, url):
         if "?v=" in url:
             return url.split("?v=")[1]
