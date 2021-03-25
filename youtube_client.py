@@ -15,8 +15,8 @@ from oauth2client.tools import argparser, run_flow
 
 class YoutubeClient:
     def _check_auth(self):
-        with open("client_secrets.json", "w") as f:
-            json.dump(json.loads(os.environ.get('client_secrets')), f)
+        # with open("client_secrets.json", "w") as f:
+        #     json.dump(json.loads(os.environ.get('client_secrets')), f)
         CLIENT_SECRETS_FILE = "client_secrets.json"
 
         # This variable defines a message to display if the CLIENT_SECRETS_FILE is
@@ -134,6 +134,12 @@ class YoutubeClient:
         )
 
         return title
+
+    def delete_all_itmes(self):
+        # TODO: parse error code
+        playlist_items = self._get_playlist_items()
+        for _, id in playlist_items.items():
+            pl_del_res = self.youtube.playlistItems().delete(id=id).execute()
 
     def _get_playlist_items(self):
         req = self.youtube.playlistItems().list(
