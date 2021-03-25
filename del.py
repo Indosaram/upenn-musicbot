@@ -11,7 +11,7 @@ if __name__ == "__main__":
 
     yc = YoutubeClient(os.environ.get('playlist_id'))
 
-    code, song = yc.delete_new_item_from_playlist(cm.video_url)
+    song = yc.delete_new_item_from_playlist(cm.video_url)
 
     user_name = cm.get_username_by_id()
 
