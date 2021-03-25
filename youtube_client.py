@@ -15,8 +15,8 @@ from oauth2client.tools import argparser, run_flow
 
 class YoutubeClient:
     def _check_auth(self):
-        with open("client_secrets.json", "w") as f:
-            json.dump(json.loads(os.environ.get('client_secrets')), f)
+        # with open("client_secrets.json", "w") as f:
+        #     json.dump(json.loads(os.environ.get('client_secrets')), f)
         CLIENT_SECRETS_FILE = "client_secrets.json"
 
         # This variable defines a message to display if the CLIENT_SECRETS_FILE is
@@ -127,8 +127,10 @@ class YoutubeClient:
         video_id = self._get_video_id(url)
         title = self._get_video_title(video_id)
         video_id_in_playlist = playlist_items[title]
-        pl_del_res = self.youtube.playlistItems().delete(
-            id=video_id_in_playlist
+        pl_del_res = (
+            self.youtube.playlistItems()
+            .delete(id=video_id_in_playlist)
+            .execute()
         )
 
         return title
@@ -144,7 +146,7 @@ class YoutubeClient:
             # Print information about each video.
             for playlist_item in res["items"]:
                 title = playlist_item["snippet"]["title"]
-                video_id = playlist_item["snippet"]["resourceId"]["videoId"]
+                video_id = playlist_item["id"]
                 playlist_items[title] = video_id
 
             req = self.youtube.playlistItems().list_next(req, res)
@@ -171,7 +173,8 @@ class YoutubeClient:
 
 
 if __name__ == "__main__":
-    yc = YoutubeClient("PLnqRT9qVgyIDvGJm32xds8BvKwhGJ0526")
-    code, song = yc.delete_new_item_from_playlist(
-        "https://www.youtube.com/watch?v=sVEXyBiBbMw&list=PLnqRT9qVgyIDvGJm32xds8BvKwhGJ0526&index=49"
+    yc = YoutubeClient("PLnqRT9qVgyIDMGZeV45CFoQa_QK2iKFc6")
+    song = yc.delete_new_item_from_playlist(
+        "https://www.youtube.com/watch?v=RmVcOfHJWGU&list=PLnqRT9qVgyIDMGZeV45CFoQa_QK2iKFc6&index=1&t=2s"
     )
+    print(song)
