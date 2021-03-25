@@ -153,7 +153,7 @@ class YoutubeClient:
 
     def _get_video_id(self, url):
         video_id = re.compile(r"\?v=(.+)\&list").search(url)
-        if video_id.group(1) is not None:
+        if video_id is not None:
             return video_id.group(1)
         else:
             return None
