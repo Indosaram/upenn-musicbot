@@ -15,8 +15,10 @@ from oauth2client.tools import argparser, run_flow
 
 class YoutubeClient:
     def _check_auth(self):
-        with open("client_secrets.json", "w") as f:
-            json.dump(json.loads(os.environ.get('client_secrets')), f)
+        client_secret = os.environ.get('client_secrets')
+        if client_secret is not None:
+            with open("client_secrets.json", "w") as f:
+                json.dump(json.loads(client_secret), f)
         CLIENT_SECRETS_FILE = "client_secrets.json"
 
         # This variable defines a message to display if the CLIENT_SECRETS_FILE is
@@ -159,7 +161,7 @@ class YoutubeClient:
         return playlist_items
 
     def _get_video_id(self, url):
-        video_id = re.compile(r"\?v=(.+?(?=\&))").search(url)
+        video_id = re.compile(r"\?v=(.+?(?=\&)?)").search(url)
         if video_id is not None:
             return video_id.group(1)
         else:
@@ -187,7 +189,7 @@ class YoutubeClient:
 
 if __name__ == "__main__":
     yc = YoutubeClient("PLnqRT9qVgyIDMGZeV45CFoQa_QK2iKFc6")
-    song = yc.delete_new_item_from_playlist(
-        "https://www.youtube.com/watch?v=-0l5fEUS3LM&list=PLnqRT9qVgyIDvGJm32xds8BvKwhGJ0526&index=50"
+    song = yc.add_new_item_to_playlist(
+        "https://www.youtube.com/watch?v=Jdbw0bDLJwQ"
     )
     print(song)
