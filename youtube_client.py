@@ -15,8 +15,8 @@ from oauth2client.tools import argparser, run_flow
 
 class YoutubeClient:
     def _check_auth(self):
-        with open("client_secrets.json", "w") as f:
-            json.dump(json.loads(os.environ.get('client_secrets')), f)
+        # with open("client_secrets.json", "w") as f:
+        #     json.dump(json.loads(os.environ.get('client_secrets')), f)
         CLIENT_SECRETS_FILE = "client_secrets.json"
 
         # This variable defines a message to display if the CLIENT_SECRETS_FILE is
@@ -114,7 +114,7 @@ class YoutubeClient:
                     .execute()
                 )
 
-                response = self._get_video_title(video_id)
+                response = self._get_video_title(video_id, url)
                 code = "200 OK"
             except Exception as e:
                 code = "404"
@@ -125,7 +125,7 @@ class YoutubeClient:
         # TODO: parse error code
         playlist_items = self._get_playlist_items()
         video_id = self._get_video_id(url)
-        title = self._get_video_title(video_id)
+        title = self._get_video_title(video_id, url)
         video_id_in_playlist = playlist_items[title]
         pl_del_res = (
             self.youtube.playlistItems()
@@ -143,19 +143,18 @@ class YoutubeClient:
 
     def _get_playlist_items(self):
         req = self.youtube.playlistItems().list(
-            playlistId=self.playlist_id, part="snippet"
+            playlistId=self.playlist_id, part="snippet", maxResults=100
         )
         playlist_items = {}
-        while req:
-            res = req.execute()
+        res = req.execute()
 
-            # Print information about each video.
-            for playlist_item in res["items"]:
-                title = playlist_item["snippet"]["title"]
-                video_id = playlist_item["id"]
-                playlist_items[title] = video_id
+        # Print information about each video.
+        for playlist_item in res["items"]:
+            title = playlist_item["snippet"]["title"]
+            video_id = playlist_item["id"]
+            playlist_items[title] = video_id
 
-            req = self.youtube.playlistItems().list_next(req, res)
+        # if playlist_items:
 
         return playlist_items
 
@@ -166,14 +165,22 @@ class YoutubeClient:
         else:
             return None
 
-    def _get_video_title(self, id):
+    def _get_video_title(self, id, url):
         search_response = (
             self.youtube.search()
             .list(q=id, part="id,snippet", maxResults=1)
             .execute()
         )
 
-        title = search_response['items'][0]['snippet']['title']
+        if len(search_response['items']) == 0:
+            response = requests.get(url)
+            title = (
+                re.compile(r'<meta name="title" content="(.|[^">]+)">')
+                .search(response.text)
+                .group(1)
+            )
+        else:
+            title = search_response['items'][0]['snippet']['title']
 
         return title
 
@@ -181,6 +188,6 @@ class YoutubeClient:
 if __name__ == "__main__":
     yc = YoutubeClient("PLnqRT9qVgyIDMGZeV45CFoQa_QK2iKFc6")
     song = yc.delete_new_item_from_playlist(
-        "https://www.youtube.com/watch?v=RmVcOfHJWGU&list=PLnqRT9qVgyIDMGZeV45CFoQa_QK2iKFc6&index=1&t=2s"
+        "https://www.youtube.com/watch?v=-0l5fEUS3LM&list=PLnqRT9qVgyIDvGJm32xds8BvKwhGJ0526&index=50"
     )
     print(song)
