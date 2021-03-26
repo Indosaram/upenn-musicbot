@@ -161,7 +161,7 @@ class YoutubeClient:
         return playlist_items
 
     def _get_video_id(self, url):
-        video_id = re.compile(r"\?v=(.+?(?=\&)?)").search(url)
+        video_id = re.compile(r"\?v=(.+(?=\&)?)").search(url)
         if video_id is not None:
             return video_id.group(1)
         else:
